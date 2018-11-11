@@ -29,6 +29,17 @@ xhr.onload = function() {
   for(let i = 0; i < rows.length; i++) {
     rows[i].addEventListener('click', function() {
       console.log(rows[i].innerText);
+      var editInputElement = document.createElement('input');
+      editInputElement.setAttribute('type', 'text');
+      editInputElement.value = rows[i].innerText;
+      rows[i].parentNode.replaceChild(editInputElement, rows[i]);
+      rows[i].addEventListener('focusout', function() {
+        var tableRowElement = document.createElement('tr');
+        var tableRowDataElement = document.createElement('td');
+        tableRowDataElement.innerText = editInputElement.value;
+        tableRowElement.appendChild(tableRowDataElement);
+        rows[i].parentNode.replaceChild(tableRowElement, editInputElement);
+      });
     });
   }
 }
